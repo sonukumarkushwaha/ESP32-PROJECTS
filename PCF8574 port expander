@@ -1,0 +1,206 @@
+#include <Adafruit_PCF8574.h>
+Adafruit_PCF8574 pcf;
+Adafruit_PCF8574 pcf1;
+
+#define button 36
+#define button1 39
+#define button2 34
+#define button3 35
+#define button4 32
+#define button5 33
+#define button6 25
+#define button7 26
+#define button8 27
+#define button9 13
+#define button10 14
+#define button11 19
+int wrongcount=0;
+int pass=0;
+int pass1=0;
+int pass2=0;
+int pass3=0;
+int pass4=0;
+int pass5=0;
+int pass6=0;
+int pass7=0;
+int pass8=0;
+int pass9=0;
+int pass10=0;
+int pass11=0;
+
+void IRAM_ATTR isr0()
+{
+  pass=1;
+}
+void IRAM_ATTR isr1()
+{
+ pass1=1;
+}
+void IRAM_ATTR isr2()
+{
+ pass2=1;
+}
+void IRAM_ATTR isr3()
+{
+  pass3=1;
+}
+void IRAM_ATTR isr4()
+{
+ pass4=1;
+}
+void IRAM_ATTR isr5()
+{
+ pass5=1;
+}
+void IRAM_ATTR isr6()
+{
+  pass6=1;
+}
+void IRAM_ATTR isr7()
+{
+ pass7=1;
+}
+void IRAM_ATTR isr8()
+{
+ pass8=1;
+}
+void IRAM_ATTR isr9()
+{
+  pass9=1;
+}
+void IRAM_ATTR isr10()
+{
+ pass10=1;
+}
+void IRAM_ATTR isr11()
+{
+ pass11=1;
+}
+
+
+
+void setup() {
+  Serial.begin(115200);
+  pcf.begin(0x20, &Wire);
+  pcf1.begin(0x24, &Wire);
+
+    for (uint8_t p=0; p<8; p++) {
+    pcf.pinMode(p, OUTPUT);
+    pcf1.pinMode(p, OUTPUT);
+  }
+
+
+
+  
+  attachInterrupt(button, isr0, HIGH);
+  attachInterrupt(button1, isr1, HIGH);
+  attachInterrupt(button2, isr2, HIGH);
+  attachInterrupt(button3, isr3, HIGH);
+  attachInterrupt(button4, isr4, HIGH);
+  attachInterrupt(button5, isr5, HIGH);
+  attachInterrupt(button6, isr6, HIGH);
+  attachInterrupt(button7, isr7, HIGH);
+  attachInterrupt(button8, isr8, HIGH);
+//  attachInterrupt(button9, isr9, HIGH);
+  attachInterrupt(button10, isr10, HIGH);
+//attachInterrupt(button11, isr11, HIGH);
+
+for(int i=0;i<8;i++){
+  pcf.digitalWrite(i, HIGH);
+  pcf1.digitalWrite(i, HIGH);
+  }
+delay(500);
+pass=0;
+pass1=0;
+  pass2=0;
+  pass3=0;
+  pass4=0;
+  pass5=0;
+  pass6=0;
+  pass7=0;
+  pass8=0;
+  pass9=0;
+  pass10=0;
+  pass11=0;
+
+}
+
+void loop() {
+int x= digitalRead(36);
+//Serial.println(x); 
+if(pass==1){
+Serial.println("36 intrupted");
+pcf.digitalWrite(0, LOW);
+pass=0;
+wrongcount++;
+}
+if(pass1==1){
+Serial.println("39 intrupted");
+pcf.digitalWrite(1, LOW);
+pass1=0;
+wrongcount++;
+}
+if(pass2==1){
+Serial.println("34 intrupted");
+pcf.digitalWrite(2, LOW);
+pass2=0;
+wrongcount++;
+}
+if(pass3==1){
+Serial.println("35 intrupted");
+pcf.digitalWrite(3, LOW);
+pass3=0;
+wrongcount++;
+}
+if(pass4==1){
+Serial.println("32 intrupted");
+pcf.digitalWrite(4, LOW);
+pass4=0;
+wrongcount++;
+}
+if(pass5==1){
+Serial.println("33 intrupted");
+pcf.digitalWrite(5, LOW);
+pass5=0;
+wrongcount++;
+}
+if(pass6==1){
+Serial.println("25 intrupted");
+pcf.digitalWrite(6, LOW);
+pass6=0;
+wrongcount++;
+}
+if(pass7==1){
+Serial.println("26 intrupted");
+pcf.digitalWrite(7, LOW);
+pass7=0;
+wrongcount++;
+}
+if(pass8==1){
+Serial.println("27 intrupted");
+pcf1.digitalWrite(0, LOW);
+pass8=0;
+wrongcount++;
+}
+if(pass9==1){
+Serial.println("13 intrupted");
+pcf1.digitalWrite(1, LOW);
+pass9=0;
+wrongcount++;
+}
+if(pass10==1){
+Serial.println("14 intrupted");
+pcf1.digitalWrite(2, LOW);
+pass10=0;
+wrongcount++;
+}
+if(pass11==1){
+Serial.println("19 intrupted");
+pcf1.digitalWrite(3, LOW);
+pass11=0;
+wrongcount++;
+}
+
+
+//Serial.println(wrongcount);
+}
